@@ -1,0 +1,139 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style>
+            html,body{margin:0;padding:0;font:14px arial}
+            img{border:0}
+            div#header{width:564px;height:35px;background:#1b1b1b;font-size:16px;color:#fff;overflow:hidden}
+            div#header span{float:right;color:#919191;font-size:12px;margin-right:14px;line-height:38px}
+            div#header strong{float:left;margin-left:15px;line-height:35px}
+            div#header span a{color:#919191;text-decoration:none}
+            div#header span a:hover{text-decoration:underline}
+            div#list{width:564px;background:#fff}
+            div.col{width:188px;float:left;overflow:hidden}
+            div.col div.a{height:44px;cursor:pointer;background:#e6e6e6 url(/img/bga.png) repeat-x;background-position:100% 110%;overflow:hidden}
+            div.col div.b{height:44px;background:url(/img/bgb.png) right repeat-y;overflow:hidden}
+            div.col div.a a{display:block;height:34px;background-repeat:no-repeat;background-image:url(/img/panel4.png);margin-top:3px;padding:3px 0 0 15px;text-decoration:none;text-shadow:#f5f5f5 0 1px 0;color:#777;font-weight:bold;line-height:34px;overflow:hidden}
+            div.col div.a a img{float:left}
+            div.col div.last{background:#e6e6e6 url(/img/bgb.png) right repeat-y;overflow:hidden}
+            div#form{float:left;background:#fff;display:none;color:#333}
+            div#livejournaltitle,div#openidtitle,div#webmoneytitle{display:none;font-size:16px;font-weight:bold;margin:16px 0 0 24px}
+            div#livejournaldesc,div#openiddesc,div#webmoneydesc{display:none;margin:12px 0 0 24px}
+            div#livejournalplaceurl,div#openidplaceurl,div#webmoneyplaceurl{display:none;margin:10px 0 0 23px;font-size:16px}
+            div#livejournalplaceurl span{margin:9px 0 0 3px;float:left}
+            div#webmoneyplaceurl span{margin:9px 0 0 3px;float:left}
+            input#livejournalurl,input#openidurl,input#webmoneyurl{float:left;width:216px;height:32px;border:1px solid #adadad;border-radius:3px;line-height:30px;background:#f0f0f0;padding:0 10px;background:url(/img/bginput.png);font-weight:bold;font-size:18px;color:#333}
+            input#openidurl{width:300px}
+            div#livejournalplacebutton,div#openidplacebutton,div#webmoneyplacebutton{display:none;margin:18px 0 0 23px}
+            input#livejournalbutton,input#openidbutton,input#webmoneybutton{height:28px;border:0;font-size:13px;font-weight:bold;line-height:30px;background:no-repeat;cursor:pointer;color:#333}
+            input#livejournalbutton:hover,input#openidbutton:hover,input#webmoneybutton:hover{background-position:0 -28px}
+            div#placefull{margin:54px 0 0 24px;color:#bababa;font-weight:bold}
+            div#placefull a{color:#bababa;text-decoration:none;margin-left:6px}
+            div#placefull a:hover{text-decoration:underline}
+            div#url_error_msg{margin:10px 20px 0 20px; height: 30px;}
+            div#url_error_msg span{font-size: 14px; text-align: right; color:red;padding-left:2px;}
+        </style>
+        <script src="/js/stats.js"></script>
+        <script src="/js/easyXDM.min.js"></script>
+        <script src="/js/window.js?v1.4.5"></script>
+    </head>
+    <body style="overflow: hidden;">
+        <div id="header">
+            <span>powered by <a href="http://ulogin.ru/" target="_blank">uLogin</a></span>
+            <strong id="loginwith"></strong>
+        </div>
+        <div id="list">
+            <div id="col1" class="col"></div>
+            <div id="col2" class="col"></div>
+            <div id="col3" class="col"></div>
+            <div id="form">
+                <div id="livejournaltitle"></div>
+                <div id="openidtitle"><br/>&nbsp;</div>
+                <div id="webmoneytitle"></div>
+                <div id="livejournaldesc"></div>
+                <div id="openiddesc"></div>
+                <div id="webmoneydesc"></div>
+                <div id="livejournalplaceurl">
+                    <input type="text" id="livejournalurl"/>
+                    <span>.livejournal.com</span>
+                        <div style="clear:both"></div>
+                </div>
+                <div id="openidplaceurl">
+                    <input type="text" id="openidurl"/>
+                    <div style="clear:both"></div>
+                </div>
+                <div id="webmoneyplaceurl">
+                    <input type="text" id="webmoneyurl"/>
+                        <span>.wmkeeper.com</span>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div id="livejournalplacebutton">
+                        <input type="submit" id="livejournalbutton" value=""/>
+                    </div>
+                    <div id="openidplacebutton">
+                        <input type="submit" id="openidbutton" value=""/>
+                    </div>
+                    <div id="webmoneyplacebutton">
+                        <input type="submit" id="webmoneybutton" value=""/>
+                    </div>
+                    <div id="url_error_msg"><span></span></div>
+                    <div id="placefull">
+                        <img src="img/arrow.png" width=6 height=10 />
+                        <a id="gotofull" href="javascript:void(full())"></a>
+                    </div>
+                </div>
+            <div style="clear:both"></div>
+        </div>
+        <!--[if IE]>
+            <script src="/js/hoverfix.js"></script>
+            <script>
+                window.onload = function(){
+                    hoverFix('openidbutton');
+                    hoverFix('livejournalbutton');
+                    hoverFix('webmoneybutton');
+                }
+            </script>
+        <![endif]-->
+        <script>
+            function ge(id) {
+                return document.getElementById(id);
+            }
+            function st(id, text) {
+                document.getElementById(id).innerHTML = text;
+            }
+            var texts = {
+                'ru': new Array('Войти с помощью', 'Войти при помощи своего аккаунта в Живом Журнале', 'Войти при помощи OpenID аккаунта', 'Введите адрес своего журнала', 'Введите свой OpenID', 'К полному списку сетей','Войти при помощи WebMoney','Введите свой WMID'),
+                'en': new Array('Sign in with', 'Sign in with LiveJournal account', 'Sign in with OpenID account', 'Enter your LiveJournal profile', 'Enter your OpenID url', 'Back to list of networks', 'Enter your WebMoney profile', 'Enter your WMID'),
+                'uk': new Array('Увійти за допомогою', 'Увійти за допомогою свого аккаунта в Живом Журнале', 'Увійти за допомогою OpenID аккаунта', 'Введіть адресу свого журналу', 'Введіть свій OpenID', 'До повного списку мереж','Увійти за допомогою свого аккаунта в WebMoney','Введіть свій WMID')
+            };
+            var sizes = {
+                'ru': new Array('215', '165', '188'),
+                'en': new Array('173', '151', '188'),
+                'uk': new Array('188', '188', '188')
+            };
+            var query = new Object();
+            var tmp = location.search.substr(1).split('&');
+            var tmp2;
+            for (var i = 0; i < tmp.length; i++) {
+                tmp2 = tmp[i].split('=');query[tmp2[0]] = tmp2[1];
+            }
+            var lang = query['lang'] ? query['lang'] : (navigator.language ? navigator.language : navigator.userLanguage).substr(0, 2);
+            if (!texts[lang])
+                lang = 'ru';
+            st('loginwith', texts[lang][0]  + ':');
+            st('livejournaltitle', texts[lang][1]);
+            st('openidtitle', texts[lang][2]);
+            st('webmoneytitle', texts[lang][6]);
+            st('livejournaldesc', texts[lang][3] + ':');
+            st('openiddesc', texts[lang][4] + ':');
+            st('webmoneydesc', texts[lang][7]);
+            st('gotofull', texts[lang][5]);
+            ge('livejournalbutton').style.backgroundImage = 'url(/img/' + (lang != 'ru' ? lang + '/' : '') + 'loginlivejournal.png)';
+            ge('openidbutton').style.backgroundImage = 'url(/img/' + (lang != 'ru' ? lang + '/' : '') + 'loginopenid.png)';
+            ge('webmoneybutton').style.backgroundImage = 'url(/img/' + (lang != 'ru' ? lang + '/' : '') + 'webmoney.png)';
+            ge('livejournalbutton').style.width = sizes[lang][0] + 'px';
+            ge('openidbutton').style.width = sizes[lang][1] + 'px';
+            ge('webmoneybutton').style.width = sizes[lang][2] + 'px';
+        </script>
+    </body>
+</html>
